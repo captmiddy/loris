@@ -190,6 +190,9 @@ class _AbstractTransformer(object):
         elif image_request.format == 'gif':
             # see http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html#gif
             im.save(target_fp)
+        
+        elif image_request.format == 'tif':
+            im.save(target_fp)
 
         elif image_request.format == 'webp':
             # see http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html#webp
