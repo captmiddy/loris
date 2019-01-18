@@ -255,10 +255,10 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
                 'LD_LIBRARY_PATH' : config['opj_libs'],
                 'PATH' : config['opj_decompress']
             }
-            super(OPJ_JP2Transformer, self).__init__(config)
+            #super(OPJ_JP2Transformer, self).__init__(config)
             #new
            self.transform_timeout = config.get('timeout', 120)
-           super(KakaduJP2Transformer, self).__init__(config)
+           super(OPJ_JP2Transformer, self).__init__(config)
 
 
         @staticmethod
