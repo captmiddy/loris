@@ -189,6 +189,9 @@ class _PillowTransformer(_AbstractTransformer):
 class JPG_Transformer(_PillowTransformer):
     def __init__(self, config): super(JPG_Transformer, self).__init__(config)
 
+class GIF_Transformer(_PillowTransformer):
+    def __init__(self, config): super(GIF_Transformer, self).__init__(config)
+
 class TIF_Transformer(_PillowTransformer):
     def __init__(self, config): super(TIF_Transformer, self).__init__(config)
 
