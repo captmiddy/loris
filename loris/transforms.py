@@ -304,7 +304,7 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
                         if not s:
                             break
                         p.feed(s)
-                     im = p.close() # a PIL.Image
+                    im = p.close() # a PIL.Image
            finally:
                 stdoutdata, stderrdata = opj_expand_proc.communicate()
                 opj_exit = opj_expand_proc.returncode
@@ -329,14 +329,14 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
                 logger.error('Problem with opj mkfifo')
             # how to handle CalledProcessError; would have to be a 500?
 
-             # opj_decompress command
-             i = '-i "%s"' % (src_fp,)
-             o = '-o %s' % (fifo_fp,)
-             region_arg = self._region_to_opj_arg(image_request.region_param)
-             reg = '-d %s' % (region_arg,) if region_arg else ''
-             reduce_arg = self._scales_to_reduce_arg(image_request)
-             red = '-r %s' % (reduce_arg,) if reduce_arg else ''
-             opj_cmd = ' '.join((self.opj_decompress,i,reg,red,o))
+            # opj_decompress command
+            i = '-i "%s"' % (src_fp,)
+            o = '-o %s' % (fifo_fp,)
+            region_arg = self._region_to_opj_arg(image_request.region_param)
+            reg = '-d %s' % (region_arg,) if region_arg else ''
+            reduce_arg = self._scales_to_reduce_arg(image_request)
+            red = '-r %s' % (reduce_arg,) if reduce_arg else ''
+            opj_cmd = ' '.join((self.opj_decompress,i,reg,red,o))
 
 
             process = multiprocessing.Process(target=self._run_transform,
