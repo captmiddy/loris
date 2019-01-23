@@ -257,8 +257,8 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
             }
             #super(OPJ_JP2Transformer, self).__init__(config)
             #new
-           self.transform_timeout = config.get('timeout', 120)
-           super(OPJ_JP2Transformer, self).__init__(config)
+            self.transform_timeout = config.get('timeout', 120)
+            super(OPJ_JP2Transformer, self).__init__(config)
 
 
         @staticmethod
