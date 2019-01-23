@@ -288,8 +288,8 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
                 x1 = region_param.pixel_x + region_param.pixel_w
                 y1 = region_param.pixel_y + region_param.pixel_h
                 arg = ','.join(map(str, (x0, y0, x1, y1)))
-             logger.debug('opj region parameter: %s', arg)
-             return arg
+            logger.debug('opj region parameter: %s', arg)
+            return arg
 
         def _run_transform(self, target_fp, image_request, opj_cmd, fifo_fp):
            try:
