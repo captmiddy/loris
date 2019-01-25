@@ -728,23 +728,23 @@ possible that there was a problem with the source file
         temp_fp = temp_file.name
 
         transformer = self.transformers[image_info.src_format]
-	#jp2 failover, use both transforms if loaded
-	if isinstance(transformer, list):
-	  transformer1 = transformer[0]
-	  transformer2 = transformer[1]
-	  try:
-	    transformer1.transform(
+        #jp2 failover, use both transforms if loaded
+        if isinstance(transformer, list):
+          transformer1 = transformer[0]
+          transformer2 = transformer[1]
+          try:
+            transformer1.transform(
               target_fp=temp_fp,
               image_request=image_request,
               image_info=image_info
             )
-	  except TransformException:
-	    transformer2.transform(
+          except TransformException:
+            transformer2.transform(
               target_fp=temp_fp,
               image_request=image_request,
               image_info=image_info
             )
-	else:
+        else:
           transformer.transform(
             target_fp=temp_fp,
             image_request=image_request,
