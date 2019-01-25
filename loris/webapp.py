@@ -357,16 +357,16 @@ class Loris(object):
         return transformers
 
     def _load_transformer(self, config):
-	#jp2 use kdu and opj for failover
-	if 'impl2' in config:
-	  Klass = getattr(transforms, config['impl'])
-	  instance = Klass(config)
-	  self.logger.debug('Loaded Primary Transformer %s', config['impl']) 
-	  Klass = getattr(transforms, config['impl2'])
-	  instance2 = Klass(config)
-	  self.logger.debug('Loaded Secondary Transformer %s', config['impl2'])
-	  return instance, instance2
-	else:
+        #jp2 use kdu and opj for failover
+        if 'impl2' in config:
+          Klass = getattr(transforms, config['impl'])
+          instance = Klass(config)
+          self.logger.debug('Loaded Primary Transformer %s', config['impl']) 
+          Klass = getattr(transforms, config['impl2'])
+          instance2 = Klass(config)
+          self.logger.debug('Loaded Secondary Transformer %s', config['impl2'])
+          return instance, instance2
+        else:
           Klass = getattr(transforms, config['impl'])
           instance = Klass(config)
           self.logger.debug('Loaded Transformer %s', config['impl'])
