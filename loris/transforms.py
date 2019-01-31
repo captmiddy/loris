@@ -322,7 +322,7 @@ class OPJ_JP2Transformer(_AbstractJP2Transformer):
             # TODO: If this command hangs, the server never returns.
             # Surely that can't be right!
             opj_decompress_proc = subprocess.Popen(opj_cmd, shell=True, bufsize=-1,
-               stderr=subprocess.PIPE, stdout=fnull, env=self.env)
+               stderr=subprocess.PIPE, env=self.env)
             with open(fifo_fp, 'rb') as f:
                 # read from the named pipe
                 p = Parser()
