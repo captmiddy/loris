@@ -732,18 +732,16 @@ possible that there was a problem with the source file
         if isinstance(transformer, tuple):
           transformer1 = transformer[0]
           transformer2 = transformer[1]
-          self.logger.debug(transformer[0])
-          self.logger.debug(transformer[1])
-          self.logger.debug('dual jp2 transformers detected')
+          self.logger.debug('dual transformers detected')
           try:
-            self.logger.debug('using jp2 transformer #1')
+            self.logger.debug('using transformer #1')
             transformer1.transform(
               target_fp=temp_fp,
               image_request=image_request,
               image_info=image_info
             )
           except TransformException:
-            self.logger.debug('failing over to jp2 transformer #2')
+            self.logger.debug('failing over to transformer #2')
             transformer2.transform(
               target_fp=temp_fp,
               image_request=image_request,
