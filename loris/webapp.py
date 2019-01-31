@@ -728,9 +728,8 @@ possible that there was a problem with the source file
         temp_fp = temp_file.name
 
         transformer = self.transformers[image_info.src_format]
-        self.logger.debug( transformer )
         #jp2 failover, use both transforms if loaded
-        if isinstance(transformer, list):
+        if isinstance(transformer, tuple):
           transformer1 = transformer[0]
           transformer2 = transformer[1]
           self.logger.debug(transformer[0])
@@ -751,7 +750,6 @@ possible that there was a problem with the source file
               image_info=image_info
             )
         else:
-          self.logger.debug('using single transformer')
           transformer.transform(
             target_fp=temp_fp,
             image_request=image_request,
