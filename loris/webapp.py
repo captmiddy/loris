@@ -731,17 +731,19 @@ possible that there was a problem with the source file
         #jp2 failover, use both transforms if loaded
         if isinstance(transformer, tuple):
           transformer1 = transformer[0]
+          t1_name = type(transformer1).__name__
           transformer2 = transformer[1]
+          t2_name = type(transformer2).__name__
           self.logger.debug('dual transformers detected')
           try:
-            self.logger.debug('using transformer #1')
+            self.logger.debug('using transformer #1: %s ' % t1_name)
             transformer1.transform(
               target_fp=temp_fp,
               image_request=image_request,
               image_info=image_info
             )
           except TransformException:
-            self.logger.debug('failing over to transformer #2')
+            self.logger.debug('failing over to transformer #2: %s' % t2_name)
             transformer2.transform(
               target_fp=temp_fp,
               image_request=image_request,
