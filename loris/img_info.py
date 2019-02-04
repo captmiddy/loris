@@ -121,7 +121,13 @@ class ImageInfo(JP2Extractor, object):
         # If constructed from JSON, the pixel info will already be processed
         if app:
             try:
-                formats = app.transformers[src_format].target_formats
+                loaded_transformers = app.transformers[src_format]
+                #if both transforms if loaded, pick the first instance of target_formats
+                if isinstance(loaded_transformers, tuple):
+                    transformer1 = loaded_transformers[0]
+                    formats = transformer1.target_formats
+                else:
+                    formats = app.transformers[src_format].target_formats
             except KeyError:
                 raise ImageInfoException(
                     "Didn't get a source format, or at least one we recognize (%r)." %

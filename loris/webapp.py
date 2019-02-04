@@ -357,10 +357,20 @@ class Loris(object):
         return transformers
 
     def _load_transformer(self, config):
-        Klass = getattr(transforms, config['impl'])
-        instance = Klass(config)
-        self.logger.debug('Loaded Transformer %s', config['impl'])
-        return instance
+        #jp2 use kdu and opj for failover
+        if 'impl2' in config:
+          Klass = getattr(transforms, config['impl'])
+          instance = Klass(config)
+          self.logger.debug('Loaded Primary Transformer %s', config['impl']) 
+          Klass = getattr(transforms, config['impl2'])
+          instance2 = Klass(config)
+          self.logger.debug('Loaded Secondary Transformer %s', config['impl2'])
+          return instance, instance2
+        else:
+          Klass = getattr(transforms, config['impl'])
+          instance = Klass(config)
+          self.logger.debug('Loaded Transformer %s', config['impl'])
+          return instance
 
     def _load_resolver(self):
         impl = self.app_configs['resolver']['impl']
@@ -718,11 +728,33 @@ possible that there was a problem with the source file
         temp_fp = temp_file.name
 
         transformer = self.transformers[image_info.src_format]
-        transformer.transform(
+        #jp2 failover, use both transforms if loaded
+        if isinstance(transformer, tuple):
+          transformer1 = transformer[0]
+          t1_name = type(transformer1).__name__
+          transformer2 = transformer[1]
+          t2_name = type(transformer2).__name__
+          self.logger.debug('dual transformers detected')
+          try:
+            self.logger.debug('using transformer #1: %s ' % t1_name)
+            transformer1.transform(
+              target_fp=temp_fp,
+              image_request=image_request,
+              image_info=image_info
+            )
+          except TransformException:
+            self.logger.debug('failing over to transformer #2: %s' % t2_name)
+            transformer2.transform(
+              target_fp=temp_fp,
+              image_request=image_request,
+              image_info=image_info
+            )
+        else:
+          transformer.transform(
             target_fp=temp_fp,
             image_request=image_request,
             image_info=image_info
-        )
+          )
 
         if self.enable_caching:
             temp_fp = self.img_cache.upsert(
